@@ -58,7 +58,6 @@ docker compose stop
 - Repositório Git e publicação no GitHub.
 - Persistência de dados com SQLite.
 - Revisão técnica com o agente de IA do Cursor.
-
 ## Contexto acadêmico
 
 Laboratório Full Stack da UniCarioca — Ciência da Computação.

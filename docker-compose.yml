@@ -1,9 +1,14 @@
+
 services:
   backend:
     build:
       context: ./backend
     ports:
       - "8000:8000"
+    environment:
+      DATABASE_PATH: /data/projects.db
+    volumes:
+      - sqlite_data:/data
 
   frontend:
     build:
@@ -12,3 +17,6 @@ services:
       - "8080:80"
     depends_on:
       - backend
+
+volumes:
+  sqlite_data:

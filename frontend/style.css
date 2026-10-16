@@ -1,0 +1,76 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 32px 16px;
+    font-family: Arial, sans-serif;
+    background: #f3f5f9;
+    color: #243047;
+  }
+  
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    margin-bottom: 8px;
+    color: #173b70;
+  }
+  
+  .descricao {
+    margin-bottom: 24px;
+    color: #5b6577;
+  }
+  
+  button {
+    padding: 12px 18px;
+    border: 0;
+    border-radius: 6px;
+    background: #175cd3;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background: #1249a8;
+  }
+  
+  #mensagem {
+    margin: 20px 0;
+  }
+  
+  #lista-projetos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    padding: 0;
+    list-style: none;
+  }
+  
+  #lista-projetos li {
+    padding: 20px;
+    border: 1px solid #dce2eb;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 5%);
+  }
+  
+  #lista-projetos h3 {
+    margin-top: 0;
+    color: #173b70;
+  }
+  
+  #lista-projetos p {
+    margin-bottom: 8px;
+    color: #4c5870;
+  }
+  
+  @media (max-width: 480px) {
+    body {
+      padding: 20px 12px;
+    }
+  }

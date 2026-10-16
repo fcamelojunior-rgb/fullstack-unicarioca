@@ -1,73 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratório Full Stack UniCarioca</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-            color: #222;
-            background: #f5f7fa;
-        }
-
-        h1 {
-            color: #17365d;
-        }
-
-        button {
-            padding: 12px 18px;
-            border: 0;
-            border-radius: 6px;
-            background: #17365d;
-            color: white;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #24558c;
-        }
-
-        #resultado {
-            margin-top: 20px;
-            padding: 16px;
-            border-radius: 6px;
-            background: white;
-            white-space: pre-wrap;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratório Full Stack UniCarioca</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
+  <main class="container">
     <h1>Laboratório Full Stack UniCarioca</h1>
-    <p>Frontend conectado à API FastAPI.</p>
 
-    <button id="carregar">Carregar projetos</button>
-    <div id="resultado">Clique no botão para consultar a API.</div>
+    <p class="descricao">
+      Consulte os projetos cadastrados na API do laboratório.
+    </p>
 
-    <script>
-        const botao = document.getElementById("carregar");
-        const resultado = document.getElementById("resultado");
+    <button id="carregar-projetos" type="button">
+      Carregar projetos
+    </button>
 
-        botao.addEventListener("click", async () => {
-            resultado.textContent = "Carregando projetos...";
+    <p id="mensagem" role="status" aria-live="polite">
+      Clique no botão para carregar os projetos.
+    </p>
 
-            try {
-                const resposta = await fetch("http://localhost:8000/projects");
-
-                if (!resposta.ok) {
-                    throw new Error("A API retornou um erro.");
-                }
-
-                const dados = await resposta.json();
-                resultado.textContent = JSON.stringify(dados, null, 2);
-            } catch (erro) {
-                resultado.textContent =
-                    "Não foi possível consultar a API. Verifique se o backend está em execução.";
-            }
-        });
-    </script>
+    <ul id="lista-projetos"></ul>
+  </main>
 </body>
 </html>

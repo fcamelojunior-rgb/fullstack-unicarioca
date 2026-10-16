@@ -1,70 +1,122 @@
 # Laboratório Full Stack UniCarioca
 
-Projeto acadêmico de Ciência da Computação que integra frontend HTML, API REST com FastAPI, banco de dados SQLite e Docker Compose.
+Projeto acadêmico de Ciência da Computação desenvolvido no Laboratório Full Stack da UniCarioca.
 
-Laboratório Full Stack da UniCarioca — Ciência da Computação.
+O **Painel de Demandas e Ações** é uma aplicação web que permite registrar, consultar, editar e excluir demandas, além de acompanhar indicadores por status.
+
+## Funcionalidades
+
+- Cadastro de novas demandas.
+- Listagem das demandas registradas.
+- Edição de demandas existentes.
+- Exclusão de demandas com confirmação.
+- Resumo quantitativo por status.
+- Persistência de dados em banco SQLite.
+- API REST documentada com FastAPI.
+
+## Tecnologias utilizadas
+
+| Camada | Tecnologias |
+|---|---|
+| Frontend | HTML, CSS e JavaScript |
+| Servidor web | Nginx |
+| Backend | Python, FastAPI e Uvicorn |
+| Banco de dados | SQLite |
+| Contêineres | Docker e Docker Compose |
+| Controle de versão | Git |
 
 ## Arquitetura
 
-- **Frontend:** HTML, CSS e JavaScript servidos pelo Nginx.
-- **Backend:** Python, FastAPI e Uvicorn.
-- **Comunicação:** o navegador faz requisições HTTP para a API.
-- **Banco de dados:** SQLite armazena os projetos.
-- **Contêineres:** Docker e Docker Compose sobem frontend e backend juntos.
-- **Persistência:** o volume Docker `sqlite_data` guarda o arquivo do banco entre reinicializações dos contêineres.
+O frontend é servido pelo Nginx na porta 8080. O JavaScript envia requisições HTTP para a API FastAPI, disponibilizada na porta 8000. O backend valida os dados e realiza as operações no banco SQLite.
 
-O aluno abre a página, clica em **Carregar projetos** e o JavaScript consulta `http://localhost:8000/projects`. A API lê o SQLite e devolve a lista.
+O volume Docker `sqlite_data` mantém os dados persistidos entre reinicializações dos contêineres.
+
+A tabela `projects`, utilizada na etapa anterior, é preservada. A tabela `demands` armazena os registros do painel.
+
+Para mais detalhes, consulte [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Endereços locais
 
-- Frontend: [http://localhost:8080](http://localhost:8080)
-- API: [http://localhost:8000](http://localhost:8000)
-- Projetos: [http://localhost:8000/projects](http://localhost:8000/projects)
-- Documentação interativa da API: [http://localhost:8000/docs](http://localhost:8000/docs)
-
-Use `http://localhost:8080` (não `127.0.0.1`) para a página coincidir com a origem liberada pela API.
+| Recurso | Endereço |
+|---|---|
+| Interface web | http://localhost:8080 |
+| API | http://localhost:8000 |
+| Documentação interativa da API | http://localhost:8000/docs |
+| Verificação de saúde | http://localhost:8000/health |
+| Listagem de demandas | http://localhost:8000/demands |
+| Indicadores | http://localhost:8000/summary |
 
 ## Como executar
 
-Na raiz do projeto:
+Pré-requisitos: Docker Desktop instalado e em execução, com suporte ao WSL habilitado.
 
-```
-docker compose up --build
-```
+Na raiz do repositório, execute:
 
-Abra [http://localhost:8080](http://localhost:8080) e clique em **Carregar projetos**.
-
-Para interromper os serviços, pressione `Ctrl+C` no terminal em que o Docker Compose está sendo executado.
-
-Para executar os contêineres em segundo plano:
-
-```
-docker compose up -d
+```bash
+docker compose up -d --build
 ```
 
-Para pará-los sem remover o volume de dados:
+Verifique o estado dos contêineres:
 
+```bash
+docker compose ps
 ```
+
+Abra http://localhost:8080 no navegador.
+
+Para consultar a documentação e testar os endpoints da API, abra http://localhost:8000/docs.
+
+Para parar os contêineres sem remover os dados persistidos:
+
+```bash
 docker compose stop
 ```
 
-O comando `docker compose down -v` remove o volume `sqlite_data` e apaga os dados do banco.
+**Importante:** evite `docker compose down -v` quando precisar preservar o volume `sqlite_data`, pois esse comando remove os volumes declarados no Compose.
 
 ## Estrutura do projeto
 
-- `frontend/`: `index.html`, `style.css` e `app.js`. No Compose, o Nginx usa esta pasta.
-- `backend/app/`: API FastAPI (`main.py`) e acesso ao SQLite (`database.py`).
-- `backend/Dockerfile` e `backend/requirements.txt`: imagem e dependências da API.
-- `docker-compose.yml`: serviços, portas e volume persistente.
-- `.gitignore`: arquivos locais ignorados pelo Git.
-- `AGENTS.md`: orientações para o agente de IA que auxilia no laboratório.
+```text
+.
+├── backend/
+│   ├── app/
+│   │   ├── database.py
+│   │   ├── main.py
+│   │   ├── schemas.py
+│   │   └── services.py
+│   ├── Dockerfile
+│   └── requirements.txt
+├── frontend/
+│   ├── app.js
+│   ├── index.html
+│   └── style.css
+├── ARCHITECTURE.md
+├── AGENTS.md
+├── docker-compose.yml
+└── README.md
+```
 
-## Status
+## Endpoints principais
 
-- Frontend funcional.
-- API REST com FastAPI.
-- Integração frontend-backend.
-- Contêineres configurados com Docker Compose.
-- Repositório Git e publicação no GitHub.
-- Persistência de dados com SQLite.
-- Revisão técnica com o agente de IA do Cursor.
+| Método | Endpoint | Descrição |
+|---|---|---|
+| GET | `/health` | Verifica a disponibilidade da API |
+| GET | `/projects` | Consulta os projetos da etapa anterior |
+| GET | `/demands` | Lista demandas |
+| POST | `/demands` | Cadastra uma demanda |
+| PUT | `/demands/{demand_id}` | Atualiza uma demanda |
+| DELETE | `/demands/{demand_id}` | Exclui uma demanda |
+| GET | `/summary` | Retorna os indicadores |
+
+## Validação funcional
+
+Os testes realizados incluem:
+
+- Consulta do estado de saúde da API.
+- Listagem de demandas e consulta de indicadores.
+- Cadastro, edição e exclusão de uma demanda de teste pela interface.
+- Verificação de que os registros originais permanecem preservados.
+
+## Orientações para desenvolvimento
+
+Consulte `AGENTS.md` para conhecer as orientações de manutenção e validação do projeto.

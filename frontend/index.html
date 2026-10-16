@@ -1,29 +1,117 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laboratório Full Stack UniCarioca</title>
+  <meta name="description" content="Painel para cadastrar, acompanhar e gerenciar demandas e ações.">
+  <title>Painel de Demandas e Ações | UniCarioca</title>
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
 </head>
 <body>
+  <header class="cabecalho">
+    <div class="container">
+      <p class="identificacao">UNiCARIOCA · PROJETO DE EXTENSÃO</p>
+      <h1>Painel de Demandas e Ações</h1>
+      <p class="descricao">
+        Cadastre, acompanhe e gerencie as demandas do projeto.
+      </p>
+    </div>
+  </header>
+
   <main class="container">
-    <h1>Laboratório Full Stack UniCarioca</h1>
+    <section class="painel-resumo" aria-labelledby="titulo-resumo">
+      <h2 id="titulo-resumo">Resumo das demandas</h2>
+      <div id="summary-box" class="resumo-grid">
+        <p>Carregando resumo...</p>
+      </div>
+    </section>
 
-    <p class="descricao">
-      Consulte os projetos cadastrados na API do laboratório.
-    </p>
+    <section class="painel-formulario" aria-labelledby="titulo-formulario">
+      <h2 id="titulo-formulario">Cadastrar demanda</h2>
 
-    <button id="carregar-projetos" type="button">
-      Carregar projetos
-    </button>
+      <form id="demand-form">
+        <input type="hidden" id="demand-id">
 
-    <p id="mensagem" role="status" aria-live="polite">
-      Clique no botão para carregar os projetos.
-    </p>
+        <div class="campos-grid">
+          <div class="campo">
+            <label for="title">Título da demanda *</label>
+            <input id="title" name="title" type="text"
+                   maxlength="150" required>
+          </div>
 
-    <ul id="lista-projetos"></ul>
+          <div class="campo">
+            <label for="category">Categoria *</label>
+            <input id="category" name="category" type="text"
+                   maxlength="80" required>
+          </div>
+
+          <div class="campo campo-completo">
+            <label for="description">Descrição *</label>
+            <textarea id="description" name="description"
+                      rows="3" maxlength="1000" required></textarea>
+          </div>
+
+          <div class="campo">
+            <label for="status">Status *</label>
+            <select id="status" name="status" required>
+              <option value="pendente">Pendente</option>
+              <option value="em andamento">Em andamento</option>
+              <option value="concluída">Concluída</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="owner">Responsável *</label>
+            <input id="owner" name="owner" type="text"
+                   maxlength="100" required>
+          </div>
+
+          <div class="campo">
+            <label for="created_at">Data de criação *</label>
+            <input id="created_at" name="created_at"
+                   type="date" required>
+          </div>
+        </div>
+
+        <div class="acoes-formulario">
+          <button id="submit-demand-btn" type="submit">
+            Cadastrar demanda
+          </button>
+          <button id="cancel-edit-btn" class="botao-secundario"
+                  type="button" hidden>
+            Cancelar edição
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="painel-demandas" aria-labelledby="titulo-demandas">
+      <div class="titulo-listagem">
+        <div>
+          <h2 id="titulo-demandas">Demandas cadastradas</h2>
+          <p>Consulte, edite ou exclua os registros.</p>
+        </div>
+
+        <button id="load-demands-btn" class="botao-secundario"
+                type="button">
+          Atualizar lista
+        </button>
+      </div>
+
+      <p id="status-box" role="status" aria-live="polite">
+        Carregando demandas...
+      </p>
+
+      <div id="demand-list" class="lista-demandas"></div>
+    </section>
   </main>
+
+  <footer class="rodape">
+    <div class="container">
+      <p>UniCarioca · Laboratório Full Stack · Projeto de extensão</p>
+    </div>
+  </footer>
 </body>
 </html>

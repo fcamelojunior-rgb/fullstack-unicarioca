@@ -4,6 +4,22 @@ const botaoCarregar = document.getElementById("carregar-projetos");
 const listaProjetos = document.getElementById("lista-projetos");
 const mensagem = document.getElementById("mensagem");
 
+function criarItemProjeto(projeto) {
+  const item = document.createElement("li");
+
+  const nome = document.createElement("h3");
+  nome.textContent = projeto.name;
+
+  const categoria = document.createElement("p");
+  categoria.textContent = `Categoria: ${projeto.category}`;
+
+  const status = document.createElement("p");
+  status.textContent = `Situação: ${projeto.status}`;
+
+  item.append(nome, categoria, status);
+  return item;
+}
+
 async function carregarProjetos() {
   mensagem.textContent = "Carregando projetos...";
   listaProjetos.innerHTML = "";
@@ -18,19 +34,7 @@ async function carregarProjetos() {
     const dados = await resposta.json();
 
     dados.projects.forEach((projeto) => {
-      const item = document.createElement("li");
-
-      const nome = document.createElement("h3");
-      nome.textContent = projeto.name;
-
-      const categoria = document.createElement("p");
-      categoria.textContent = `Categoria: ${projeto.category}`;
-
-      const status = document.createElement("p");
-      status.textContent = `Situação: ${projeto.status}`;
-
-      item.append(nome, categoria, status);
-      listaProjetos.appendChild(item);
+      listaProjetos.appendChild(criarItemProjeto(projeto));
     });
 
     mensagem.textContent = `${dados.projects.length} projeto(s) carregado(s).`;
